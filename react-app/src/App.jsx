@@ -7,20 +7,21 @@ import './App.css';
 import { applyTax, calculateTotals, categorizeData,} from './utils/transactionUtils.js';
 
 
-// Storage key for saving finance data in local machine
+// Storage key for saving finance data in your local
 
-const savedFinanceDataKey = 'saved-finanace-data';
+const app_data_storage_key = 'saved-finanace-data'
 
-function readSaved () {
-    try {
-       const raw = localStorage.getItem(savedFinanceDataKey);
-       if (!raw) return null
-        return JSON.parse(raw);
-       } 
-       catch {
-        return null
-       }
-    }
+function loadSavedAppState() {
+  try {
+    const savedJsonString = localStorage.getItem(app_data_storage_key)
+    if (!savedJsonString) return null
+    return JSON.parse(savedJsonString)
+  }
+catch{
+  return null
+}
 
- x
+
+}
+
 
