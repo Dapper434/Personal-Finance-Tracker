@@ -1,31 +1,26 @@
-import { useState } from "react";
-import Chart from "./components/Chart";
-import TransactionForm from "./components/TransactionForm";
-import TransactionList from "./components/TransactionList";
+import { useEffect, useState } from 'react';
+import Transaction from './components/TransactionForm.jsx';
+import TransactionList from './components/TransactionList.jsx';
+import SpendingChart from './components/SpendingChart.jsx';
+import './App.css';
 
-function App() {
-
-  const [transactions, setTransactions] = useState([]);
-
-  return (
-    <div>
-
-      <Chart transactions={transactions} />
-
-      <TransactionForm
-        transactions={transactions}
-        setTransactions={setTransactions}
-        />
-
-      <TransactionList transactions={transactions} />
+import { applyTax, calculateTotals, categorizeData,} from './utils/transactionUtils.js';
 
 
-      
+// Storage key for saving finance data in local machine
 
-    
+const savedFinanceDataKey = 'saved-finanace-data';
 
-    </div>
-  );
-}
+function readSaved () {
+    try {
+       const raw = localStorage.getItem(savedFinanceDataKey);
+       if (!raw) return null
+        return JSON.parse(raw);
+       } 
+       catch {
+        return null
+       }
+    }
 
-export default App;
+ x
+

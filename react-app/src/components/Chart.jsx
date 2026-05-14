@@ -42,10 +42,7 @@ export default function SpendingChart({ data }) {
  <div className="chart-wrap">
         <ResponsiveContainer width="100%" height={320}>
           <PieChart>
-             {/*
-              Recharts (SVG-style): cx = where the middle of the pie sits left-to-right,
-              cy = where it sits top-to-bottom. 50% and 50% = dead center of the chart area.
-            */}
+             
             <Pie
               data={data}
               dataKey="value"
