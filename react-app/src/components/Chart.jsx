@@ -9,7 +9,7 @@ import {
 import {format_kenya_shillings} from '../utils/financeUtils.js'
 
 
-// One color per pie slice (CSS color names); if there are more slices than names, we wrap around.
+// One color per pie slice; if there are more slices than names, we wrap around.
 const slice_colors = [
   'royalblue', 
   'blueviolet', 
