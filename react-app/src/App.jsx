@@ -9,7 +9,7 @@ import { applyTax, calculateTotals, categorizeData,} from './utils/transactionUt
 
 // Storage key for saving finance data in your local
 
-const app_data_storage_key = 'saved-finanace-data'
+const app_data_storage_key = 'saved-finance-data'
 
 function loadSavedAppState() {
   try {
