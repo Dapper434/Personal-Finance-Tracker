@@ -25,3 +25,37 @@ export function calculateTotals(data) {
 
 }
 
+export function categorizedData(data) {
+    const transaction = Array.isArray(data) ? data : [];
+    const categorizedTotals = {};
+
+
+for (let i = 0; i<transaction.length; i++) {
+    const transaction = Transaction[i];
+    if (transaction.type !== 'expense') continue;
+    const amount = Number(transaction.amount);
+    if (Number.isNaN(amount)) continue;
+
+// Category name is normal, or defaulted to Other
+
+const categoryName = transaction.category && transaction.category.trim()  ? transaction.category.trim() : 'Other';
+
+categoryTotals[categoryName] = (categoryTotals[categoryName] || 0) + amount;
+}
+
+return Object.keys(categoryTotals).map((name) => ({
+    name,
+    value: categoryTotals[name],        
+}));
+
+}
+
+
+
+
+
+
+
+
+
+
