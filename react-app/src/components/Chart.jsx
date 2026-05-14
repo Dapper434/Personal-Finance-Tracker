@@ -17,5 +17,36 @@ export default function SpendingChart({ data }) {
       </section>
     )
   }
+  return (
+    <section className="card chart-card">
+      <h2>Spending by category</h2>
+      <p className="muted">Uses your expense rows grouped in vanilla JS.</p>
+ <div className="chart-wrap">
+        <ResponsiveContainer width="100%" height={320}>
+          <PieChart>
+            <Pie
+              data={data}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={100}
+              paddingAngle={2}
+            >
+              {data.map((entry, index) => (
+                <Cell
+                  key={entry.name}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Tooltip formatter={(v) => `$${Number(v).toFixed(2)}`} />
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    </section>
+  ) 
 
 }
