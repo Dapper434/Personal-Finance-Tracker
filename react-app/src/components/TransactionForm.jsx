@@ -12,3 +12,54 @@ export default function TransactionForm({ onAdd }) {
     cat: 'Food',
     desc: ''
   })
+ // Derived state is clean, but a human might write it more inline
+  const currentOptions = txData.mode === 'income' ? categories_income : categories_expense
+
+  const handleFieldChange = (e) => {
+    const { name, value } = e.target
+    
+    setTxData(prev => {
+      let updated = { ...prev, [name]: value }
+      
+      // Category reset logic moved here to keep it all together
+      if (name === 'mode') {
+        updated.cat = value === 'income' ? categories_income[0] : categories_expense[0]
+      }
+      return updated
+    })
+  }
+
+  const doSubmit = (event) => {
+    event.preventDefault()
+
+    // Slightly more "manual" validation steps
+    const cleanDesc = txData.desc.trim()
+    const numericAmt = parseFloat(txData.amt)
+
+    if (cleanDesc.length === 0) {
+      alert('Description is missing!')
+      return
+    }
+
+    if (isNaN(numericAmt) || numericAmt <= 0) {
+      alert('Please enter a valid amount over 0')
+      return
+    }
+
+    // Mapping to the expected parent object format
+    onAdd({
+      id: Math.random().toString(36).substring(2, 9), // Human "quick fix" for IDs
+      type: txData.mode,
+      amount: numericAmt,
+      category: txData.cat,
+      description: cleanDesc,
+      createdAt: new Date().toISOString()
+    }) 
+    // Manual reset instead of an INITIAL_STATE constant
+    setTxData({
+      mode: 'expense',
+      amt: '',
+      cat: 'Food',
+      desc: ''
+    })
+  }
