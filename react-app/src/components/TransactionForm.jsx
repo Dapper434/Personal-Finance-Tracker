@@ -1,18 +1,18 @@
 import { useState } from 'react'
 
-// Put these in a simple array at the top, human-style
+
 const categories_expense = ['Food', 'Transport', 'Bills', 'Entertainment', 'Other']
 const categories_income = ['Salary', 'Freelance', 'Side hustle', 'Other']
 
 export default function TransactionForm({ onAdd }) {
-  // Humans often use individual states or slightly less formal names
+  // Local form state
   const [txData, setTxData] = useState({
     mode: 'expense',
     amt: '',
     cat: 'Food',
     desc: ''
   })
- // Derived state is clean, but a human might write it more inline
+ // Derived state 
   const currentOptions = txData.mode === 'income' ? categories_income : categories_expense
 
   const handleFieldChange = (e) => {
@@ -32,7 +32,7 @@ export default function TransactionForm({ onAdd }) {
   const doSubmit = (event) => {
     event.preventDefault()
 
-    // Slightly more "manual" validation steps
+    //  validation steps
     const cleanDesc = txData.desc.trim()
     const numericAmt = parseFloat(txData.amt)
 
@@ -55,7 +55,7 @@ export default function TransactionForm({ onAdd }) {
       description: cleanDesc,
       createdAt: new Date().toISOString()
     }) 
-    // Manual reset instead of an INITIAL_STATE constant
+    
     setTxData({
       mode: 'expense',
       amt: '',
