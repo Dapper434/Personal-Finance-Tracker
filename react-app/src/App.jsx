@@ -11,16 +11,15 @@ import { applyTax, calculateTotals, categorizeData,} from './utils/transactionUt
 
 const app_data_storage_key = 'saved-finance-data'
 
+
 function loadSavedAppState() {
   try {
     const savedJsonString = localStorage.getItem(app_data_storage_key)
     if (!savedJsonString) return null
     return JSON.parse(savedJsonString)
+  } catch {
+    return null
   }
-catch{
-  return null
-}
-
 }
 
 // Initialize state with saved local storage data, hence providing safe defaults if nothing is found, preventing also app crash.
@@ -59,11 +58,27 @@ const spendingTotalsByCategory = categorizeData(transactions)
 const estimatedTaxOnIncome = applyTax(totals.income, taxRate)
 
 
+// Handling of Events
 
-
-
-
-
-
-
+function handleAdd(newTransaction) {
+  const updatedTransactionList = [newTransaction, ...transactions]
+  setTransactions(updatedTransactionList)
 }
+
+// Filter transaction by id and update state
+function handleDelete(transactionId) {
+  const transactionsWithoutDeleted = transactions.filter((item) => {
+    return item.id !== transactionId
+  })
+  setTransactions(transactionsWithoutDeleted)
+}
+
+// Tax rate input is updated, and only works for a valid number.
+function handleTaxRateChange(event) {
+  const taxRateFromInput = parseFloat(event.target.value)
+  if (!Number.isNaN(taxRateFromInput)) {
+    setTaxRate(taxRateFromInput)
+  }
+}
+
+
