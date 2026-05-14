@@ -21,14 +21,13 @@ catch{
   return null
 }
 
-
 }
 
 // Initialize state with saved local storage data, hence providing safe defaults if nothing is found, preventing also app crash.
 
 export default function App() {
 
-  // extract transactions safely, stays normal(empty array) if invalid
+  // extract the  transactions safely (stays normal if data is missing)
   const savedAppState = loadSavedAppState()
   const initialTransactions = savedAppState && Array.isArray(savedAppState.transactions) ? savedAppState.transactions : []
 
@@ -40,6 +39,24 @@ const [transactions, setTransactions] = useState(initialTransactions)
 const [taxRate, setTaxRate] = useState(initialTaxRate)
 
 
+
+
+//  Persist the app state to the local storage when the tax rates and transactions are updated
+
+
+  useEffect(() => {
+    const appStateSnapshot = { transactions, taxRate }
+    localStorage.setItem(
+      app_data_storage_key,
+      JSON.stringify(appStateSnapshot),
+    )
+  }, [transactions, taxRate])
+
+
+  // Calc the derived values from raw state for rendering of UI(thus avoid data duplication)
+const totals = calculateTotals(transactions)
+const spendingTotalsByCategory = categorizeData(transactions)
+const estimatedTaxOnIncome = applyTax(totals.income, taxRate)
 
 
 
