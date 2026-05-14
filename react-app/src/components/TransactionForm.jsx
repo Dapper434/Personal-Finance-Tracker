@@ -63,3 +63,56 @@ export default function TransactionForm({ onAdd }) {
       desc: ''
     })
   }
+  return (
+    <form className="card form-card" onSubmit={doSubmit}>
+      <h2 style={{ marginBottom: '10px' }}>Add a transaction</h2>
+      <p className="muted">Pick income or expense, then fill the fields.</p>
+
+      <div className="field-row">
+        <label>
+          Type
+          <select name="mode" value={txData.mode} onChange={handleFieldChange}>
+            <option value="expense">Expense</option>
+            <option value="income">Income</option>
+          </select>
+        </label>
+        
+        <label>
+          Category
+          <select name="cat" value={txData.cat} onChange={handleFieldChange}>
+            {currentOptions.map(item => (
+              <option key={item} value={item}>{item}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <label className="block-label">
+        Amount
+        <input
+          name="amt"
+          type="number"
+          step="0.01"
+          placeholder="0.00"
+          value={txData.amt}
+          onChange={handleFieldChange}
+        />
+      </label>
+
+      <label className="block-label">
+        Description
+        <input
+          name="desc"
+          type="text"
+          placeholder="Coffee, rent, paycheck..."
+          value={txData.desc}
+          onChange={handleFieldChange}
+        />
+      </label>
+
+      <button type="submit" className="primary-btn">
+        Save transaction
+      </button>
+    </form>
+  )
+}
