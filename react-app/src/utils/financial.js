@@ -1,15 +1,15 @@
 export function calculateTotals(data) {
     // strictly working with arrays.
-    const transaction = Array.isArray(data) ? data : []
+    const transactions = Array.isArray(data) ? data : []
 
-    return transaction.reduce(
-        (totals, transactions) => {
+    return transactions.reduce(
+        (totals, transaction) => {
             const amount = Number(transaction.amount);
-// also work strictly with values(nummbers)
+// also work strictly with values(numbers)
             if (Number.isNaN(amount)) {
                 return totals;
             }
-// Categorize amount into balance, income or expence 
+// Categorize amount into balance, income or expense
             if (transaction.type === 'income') {
                 totals.income += amount;
                 totals.balance += amount;
@@ -20,7 +20,7 @@ export function calculateTotals(data) {
             return totals;
         },
 
-        { balance: 0, expense: 0, expense: 0 }
+        { balance: 0, expense: 0, income: 0 }
     );
 
 }
@@ -32,13 +32,13 @@ export function categorizeData(data) {
   for (let i = 0; i < transactions.length; i++) {
     const transaction = transactions[i];
     
-// Proceess expense type
+// Process expense type
     if (transaction.type !== 'expense') continue;
 
     const amount = Number(transaction.amount);
     if (Number.isNaN(amount)) continue;
 
-//  Normalize categoty name,else, assign 'other' 
+//  Normalize category name, else assign 'Other'
     const categoryName = transaction.category && transaction.category.trim() 
       ? transaction.category.trim() 
       : 'Other';
@@ -50,5 +50,33 @@ export function categorizeData(data) {
     name,
     value: categoryTotals[name],
   }));
+}
+
+ 
+// Tax calc based on gross amount and percentage.
+export function applyTax(amount, taxRate) {
+    const grossAmount = Number(amount);
+    const taxRateNum = Number(taxRate);
+
+    if (Number.isNaN(grossAmount) || grossAmount < 0 || Number.isNaN(taxRateNum) || taxRateNum < 0) {
+        return 0;
+    }
+
+    return (grossAmount * taxRateNum) / 100;
+}
+
+// Format numeric value to Kenyan Shillings
+export function format_kenya_shillings(amount) {
+    const numericValue = Number(amount);
+
+    if (Number.isNaN(numericValue)) {
+        return 'Ksh 0.00';
+    }
+    return new Intl.NumberFormat('en-KE', {
+        style: 'currency',
+        currency: 'KES',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    }).format(numericValue);
 }
 
