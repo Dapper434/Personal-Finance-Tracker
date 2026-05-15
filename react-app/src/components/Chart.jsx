@@ -11,12 +11,13 @@ import {format_kenya_shillings} from '../utils/financial.js'
 
 // One color per pie slice; if there are more slices than names, we wrap around.
 const slice_colors = [
-  'royalblue', 
-  'blueviolet', 
-  'deeppink', 
-  'darkorange', 
-  'limegreen', 
-  'lightseagreen']
+  '#0d7a6f',
+  '#15803d',
+  '#0e7490',
+  '#b45309',
+  '#7c3aed',
+  '#be185d',
+]
 
 
 // `data` comes from App as { name: category label, value: ksh }[] (see financial.js).
