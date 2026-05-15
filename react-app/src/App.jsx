@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Transaction from './components/TransactionForm.jsx';
 import TransactionList from './components/TransactionList.jsx';
 import SpendingChart from './components/Chart.jsx';
-import './App.css';
+import './index.css';
 
 import { applyTax, calculateTotals, categorizeData,} from './utils/financial.js';
 
