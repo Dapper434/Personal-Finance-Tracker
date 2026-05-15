@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import TransactionForm from './components/TransactionForm.jsx';
 import TransactionList from './components/TransactionList.jsx';
 import SpendingChart from './components/Chart.jsx';
-import './index.css';
+import './App.css';
 
 import { applyTax, calculateTotals, categorizeData, format_kenya_shillings } from './utils/financial.js';
 
