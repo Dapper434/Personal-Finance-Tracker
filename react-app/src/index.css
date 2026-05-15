@@ -1,16 +1,20 @@
-
+/* Personal Finance Tracker — brand palette */
 :root {
-  --page-bg: #f4f6fb;
+  --brand: #0d7a6f;
+  --brand-dark: #095c54;
+  --brand-light: #e6f4f2;
+  --page-bg: #f4f8f7;
   --surface: #ffffff;
-  --text: #111827;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --positive: #16a34a;
-  --negative: #dc2626;
-  --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --text: #1a2e2b;
+  --muted: #5c6f6c;
+  --border: #d4e4e1;
+  --primary: var(--brand);
+  --primary-dark: var(--brand-dark);
+  --positive: #15803d;
+  --negative: #c2410c;
+  --shadow: 0 8px 24px rgba(13, 122, 111, 0.08);
+  --shadow-sm: 0 2px 8px rgba(13, 122, 111, 0.06);
+  font-family: 'Segoe UI', system-ui, Roboto, sans-serif;
   line-height: 1.5;
   color: var(--text);
   background: var(--page-bg);
@@ -30,10 +34,17 @@ body {
   min-height: 100vh;
 }
 
+.muted {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
 code {
   font-family: ui-monospace, Consolas, monospace;
   font-size: 0.9em;
-  background: #eef2ff;
+  background: var(--brand-light);
+  color: var(--brand-dark);
   padding: 0.1rem 0.35rem;
   border-radius: 4px;
 }
