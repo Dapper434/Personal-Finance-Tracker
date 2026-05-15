@@ -6,7 +6,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts"
-import {format_kenya_shillings} from '../utils/financeUtils.js'
+import {format_kenya_shillings} from '../utils/financial.js'
 
 
 // One color per pie slice; if there are more slices than names, we wrap around.
