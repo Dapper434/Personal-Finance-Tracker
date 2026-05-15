@@ -72,7 +72,7 @@ export default function SpendingChart({ data }) {
 
 }
 
-export default Chart;
+
 
 
 

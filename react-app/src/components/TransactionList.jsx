@@ -1,4 +1,4 @@
-import { format_kenya_shillings } from '../utils/financeUtils.js'
+import { format_kenya_shillings } from '../utils/financial.js'
 
 // Layout and colors for .tx-list, .tx-row, .money-in / .money-out live in App.css.
 
@@ -58,3 +58,4 @@ export default function TransactionList({ items, onDelete }) {
     </section>
   )
 }
+
