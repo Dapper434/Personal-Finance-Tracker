@@ -51,3 +51,32 @@ export function categorizeData(data) {
     value: categoryTotals[name],
   }));
 }
+
+ 
+// Tax calc based on grooss amount and percentage.
+export function applyTax(amount, taxRate) {
+    const grossAmount = Number(amount);
+    const taxRate = Number(taxRate);
+
+    if (Number.isNaN(grossAmount) || grossAmount < 0 || Number.isNaN(taxRate) || taxRate < 0) {
+        return 0;
+    }
+
+    return (grossAmount * taxRate) / 100;
+}
+
+// Format numeriv val to ksh
+export function format_kenya_shillings(amount) {
+    const numericValue = Number(amount);
+
+    if (Number.isNaN(numericValue)) {
+        return 'Ksh 0.00';
+    }
+    return new Intl.NumberFormat('en-KE', {
+        style: 'currency',
+        currency: 'KES',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    }).format(numericValue);
+}
+
