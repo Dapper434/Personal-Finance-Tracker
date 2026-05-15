@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import Transaction from './components/TransactionForm.jsx';
+import TransactionForm from './components/TransactionForm.jsx';
 import TransactionList from './components/TransactionList.jsx';
 import SpendingChart from './components/Chart.jsx';
 import './index.css';
 
-import { applyTax, calculateTotals, categorizeData,} from './utils/financial.js';
+import { applyTax, calculateTotals, categorizeData, format_kenya_shillings } from './utils/financial.js';
 
 
 // Storage key for saving finance data in your local
@@ -115,7 +115,7 @@ return (
         </article>
         <article className="summary-card">
           <h3>Expenses</h3>
-          <p className="big-number">
+          <p className="big-number negative">
             {format_kenya_shillings(totals.expenses)}
           </p>
         </article>
