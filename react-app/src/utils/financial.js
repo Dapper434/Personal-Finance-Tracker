@@ -65,7 +65,7 @@ export function applyTax(amount, taxRate) {
     return (grossAmount * taxRateNum) / 100;
 }
 
-// Format numeric value to Kenyan Shillings
+// Format numeric val to ksh
 export function format_kenya_shillings(amount) {
     const numericValue = Number(amount);
 
