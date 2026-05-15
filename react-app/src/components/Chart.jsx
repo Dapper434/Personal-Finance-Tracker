@@ -19,7 +19,7 @@ const slice_colors = [
   'lightseagreen']
 
 
-// `data` comes from App as { name: category label, value: KES amounts }[] (see financeUtils).
+// `data` comes from App as { name: category label, value: ksh }[] (see financial.js).
 export default function SpendingChart({ data }) {
   if (data.length===0) {
     return (
@@ -30,7 +30,7 @@ export default function SpendingChart({ data }) {
     )
   }
 
- // When you hover a slice, Recharts passes the raw number — we show it as Kenyan Shillings.
+ // Hover a slice, recharts shows value as ksh.
   function kes_for_tooltip(raw_value) {
     return format_kenya_shillings(raw_value)
   }
@@ -72,7 +72,7 @@ export default function SpendingChart({ data }) {
 
 }
 
-
+export default Chart;
 
 
 
