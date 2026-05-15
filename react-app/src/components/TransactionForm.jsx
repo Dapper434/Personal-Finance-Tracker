@@ -116,3 +116,5 @@ export default function TransactionForm({ onAdd }) {
     </form>
   )
 }
+
+export default TransactionForm

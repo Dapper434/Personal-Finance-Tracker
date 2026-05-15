@@ -58,3 +58,5 @@ export default function TransactionList({ items, onDelete }) {
     </section>
   )
 }
+
+export default TransactionList
