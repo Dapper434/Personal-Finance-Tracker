@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import Transaction from './components/TransactionForm.jsx';
 import TransactionList from './components/TransactionList.jsx';
-import SpendingChart from './components/SpendingChart.jsx';
+import SpendingChart from './components/Chart.jsx';
 import './App.css';
 
-import { applyTax, calculateTotals, categorizeData,} from './utils/transactionUtils.js';
+import { applyTax, calculateTotals, categorizeData,} from './utils/financial.js';
 
 
 // Storage key for saving finance data in your local
