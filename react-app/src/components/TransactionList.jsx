@@ -17,7 +17,7 @@ export default function TransactionList({ items, onDelete }) {
   // Copy the array so we never change React state in place; then sort by date.
   const rows_newest_first = [...items].sort((left, right) => {
     // localeCompare on ISO strings keeps newest transactions at the top.
-    return String(right.createdAt).localeCompare(String(left.createdAt))
+    return String(right.created_at).localeCompare(String(left.created_at))
   })
 
   return (
