@@ -48,12 +48,11 @@ export default function TransactionForm({ onAdd }) {
 
     // Mapping to the expected parent object format
     onAdd({
-      id: Math.random().toString(36).substring(2, 9), // Human "quick fix" for IDs
       type: txData.mode,
       amount: numericAmt,
       category: txData.cat,
       description: cleanDesc,
-      createdAt: new Date().toISOString()
+      
     }) 
     
     setTxData({

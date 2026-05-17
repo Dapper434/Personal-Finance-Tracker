@@ -3,24 +3,13 @@ import AppNav from './components/AppNav.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
 import TransactionsPage from './pages/TransactionsPage.jsx'
 import './App.css'
+import { supabase } from './supabaseClient.js'
 
 import {
   applyTax,
   calculateTotals,
   categorizeData,
 } from './utils/financial.js'
-
-const app_data_storage_key = 'saved-finance-data'
-
-function loadSavedAppState() {
-  try {
-    const savedJsonString = localStorage.getItem(app_data_storage_key)
-    if (!savedJsonString) return null
-    return JSON.parse(savedJsonString)
-  } catch {
-    return null
-  }
-}
 
 function getPageFromHash() {
   return window.location.hash === '#/transactions'
@@ -29,28 +18,30 @@ function getPageFromHash() {
 }
 
 export default function App() {
-  const savedAppState = loadSavedAppState()
-  const initialTransactions =
-    savedAppState && Array.isArray(savedAppState.transactions)
-      ? savedAppState.transactions
-      : []
-  const initialTaxRate =
-    savedAppState && typeof savedAppState.taxRate === 'number'
-      ? savedAppState.taxRate
-      : 20
-
-  const [transactions, setTransactions] = useState(initialTransactions)
-  const [taxRate, setTaxRate] = useState(initialTaxRate)
+  const [transactions, setTransactions] = useState([])
+  const [taxRate, setTaxRate] = useState(20)
   const [page, setPage] = useState(getPageFromHash)
+  const [loading, setLoading] = useState(true)
 
+  // Fetch all transactions from Supabase on app load
   useEffect(() => {
-    const appStateSnapshot = { transactions, taxRate }
-    localStorage.setItem(
-      app_data_storage_key,
-      JSON.stringify(appStateSnapshot),
-    )
-  }, [transactions, taxRate])
+    async function fetchTransactions() {
+      const { data, error } = await supabase
+        .from('transactions')
+        .select('*')
+        .order('created_at', { ascending: false })
 
+      if (error) {
+        console.error('Error fetching transactions:', error)
+      } else {
+        setTransactions(data)
+      }
+      setLoading(false)
+    }
+    fetchTransactions()
+  }, [])
+
+  // Hash-based routing
   useEffect(() => {
     const onHashChange = () => setPage(getPageFromHash())
     window.addEventListener('hashchange', onHashChange)
@@ -61,11 +52,31 @@ export default function App() {
   const spendingTotalsByCategory = categorizeData(transactions)
   const estimatedTaxOnIncome = applyTax(totals.income, taxRate)
 
-  function handleAdd(newTransaction) {
-    setTransactions([newTransaction, ...transactions])
+  // POST new transaction to Supabase
+  async function handleAdd(newTransaction) {
+    const { data, error } = await supabase
+      .from('transactions')
+      .insert([newTransaction])
+      .select()
+
+    if (error) {
+      console.error('Error saving transaction:', error)
+      return
+    }
+    setTransactions([data[0], ...transactions])
   }
 
-  function handleDelete(transactionId) {
+  // DELETE transaction from Supabase
+  async function handleDelete(transactionId) {
+    const { error } = await supabase
+      .from('transactions')
+      .delete()
+      .eq('id', transactionId)
+
+    if (error) {
+      console.error('Error deleting transaction:', error)
+      return
+    }
     setTransactions(transactions.filter((item) => item.id !== transactionId))
   }
 
@@ -77,6 +88,15 @@ export default function App() {
   }
 
   const isTransactionsPage = page === 'transactions'
+
+  // Loading state while Supabase fetches data
+  if (loading) {
+    return (
+      <div className="app-page">
+        <p style={{ padding: '2rem' }}>Loading your transactions...</p>
+      </div>
+    )
+  }
 
   return (
     <div className="app-page">
@@ -92,7 +112,7 @@ export default function App() {
             <p className="lede">
               {isTransactionsPage
                 ? 'Browse and manage every transaction you have saved.'
-                : 'Amounts(KSH). Totals update in real-time. Data lives on your local'}
+                : 'Amounts (KSH). Totals update in real-time.'}
             </p>
           </div>
         </header>

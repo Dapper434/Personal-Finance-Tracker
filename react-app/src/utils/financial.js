@@ -14,13 +14,13 @@ export function calculateTotals(data) {
                 totals.income += amount;
                 totals.balance += amount;
             } else if (transaction.type === 'expense') {
-                totals.expense += amount;
+                totals.expenses += amount;
                 totals.balance -= amount;
             }
             return totals;
         },
 
-        { balance: 0, expense: 0, income: 0 }
+        { balance: 0, expenses: 0, income: 0 }
     );
 
 }
